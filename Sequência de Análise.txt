@@ -1,0 +1,55 @@
+Sequência de tratamento de dados:
+
+1. Pré-Processamento (sempre dentro do domínio dos dados)
+    1.1 - Tratamento de Valores faltantes (missing values) [MUITO CUIDADO COM DISTORÇÃO DE DADOS ou seja, apenas para modelos, não mudar os dados próprios do dataset]
+        ~ Investigar se não é uma causa natural a falta de certos valores no dado 
+        ~ Excluir as instâncias com valores faltantes 
+        ~ Completar os valores com:
+            .Valores númericos:
+                Mediana (Não suscetiva a outliers)
+            .Valores Categóricos:
+                Moda
+                'Outros' (adição de uma categoria extra)
+    1.2 - Tratamento de outliers
+        ~ Dependendo, mas raramente, considerar manter os outliers, dependendo sempre da finalidade
+        ~ Tratamento pode ser feito da mesma maneira que os missing values
+
+
+2. Codificação de Categoria (Variáveis Qualitativas - Encoding)
+    ~ Transformar categorias em números 
+        .Label enconding [ Há ordem nos dados ]
+            Substituição direta para um número, exemplo de 1 a 5 para categorias
+        .One-hot enconding (dummy variable) [ Não há ordem nos dados ] [ Não usar quando se tem uma grande quantidade de categorias ]
+            Substituição por Coluna de valor, como uma lista onde se tem um valor [0, 0, 1, 0] para a existência da 3ª categoria
+            Coloca o nome da categoria em uma coluna e com valor binário indica se ocorre ou não
+            Detalhe para remover a multicolinearidade, então remover um dummy variable
+
+
+3. Dimensionamento de Características (Normalização)
+    É o processo de transformação de dados numéricos
+    As variáveis em escalas diferentes contribuem de forma desbalanceada para o modelo
+    Dados normalizados ajudam o Gradient Descent a convergir mais rapidamente
+    ~ Padronização (Z-score)
+        Dados aproximados da média(0) e desvio padrão 1 [ Tabela de Estatística ]
+    ~ Normalização (Min-Max)
+        Todos os dados serão transformados de Zero a Um (0~1)
+
+
+4. Geração e Extração de Características
+    4.1 Binning
+        ~ Reduz complexidade das características, criar 'outros' para baixa cardinalidade
+            .Junção das categorias em uma
+                Melhora performance
+    4.2 PCA [ Principal Component Analysis ] (Reduzir dimensionalidade para lidar com a 'maldição da dimensionalidade')
+        ~ Redução de dimensionalidade
+            .Cria atributos 'novos' sintéticos, sem explicação funcional, mas trazem as características importantes dos dados inciais
+                Melhora performance através da projeção
+    4.3 Decomposição de datas   
+        ~ Extrair padrões de datas
+            .Por exemplo extrair mês, feriado, ano da data para descobrir padrões corpotamentais dos dados
+            
+
+5. Seleção de Características Importantes
+    ~ Definis quais características entre as que já existam, saber quais são as que mais contribuem para a performance do modelo
+    ~ Melhoria tanto do ponto de vista de métricas quanto de processamento/recursos computacionais com o modelo mais simples.
+    ~ Quanto mais simples o modelo mais facilmente ele pode ser explicável
